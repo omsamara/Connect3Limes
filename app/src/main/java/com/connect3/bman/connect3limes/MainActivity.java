@@ -235,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
                     limeWins.setText("Lime Wins: " + numLimeWins);
                     saveVariables();
                 }
-
                 layout.setVisibility(View.VISIBLE);
                 return true;
 
