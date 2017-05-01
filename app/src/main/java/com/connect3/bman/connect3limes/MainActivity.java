@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     /** Positions in the board that represent 3 connected tokens, meaning a win. */
     private int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
+    /** number of ms it takes to drop the token into the correct spot */
+    private static final int DROP_DOWN_TIME = 400;
 
     /** Board position for the space in the top left of the board */
     private ImageView space0;
@@ -125,12 +127,12 @@ public class MainActivity extends AppCompatActivity {
             counter.setTranslationY(-1000f);
             gameState[gridPos] = 0;
             counter.setImageResource(R.drawable.lime);
-            counter.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            counter.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
             playerCanGo = false;
             if (endGameActions()) {
                 return;
             }
-            new CountDownTimer(500, 100) {
+            new CountDownTimer(550, 100) {
 
                 public void onTick(long millisUntilFinished) {
                     //do nothing
@@ -298,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
             space0.setTranslationY(-1000f);
             gameState[0] = 1;
             space0.setImageResource(R.drawable.lemon);
-            space0.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space0.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 1 && gameIsActive) {
 
@@ -306,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             space1.setTranslationY(-1000f);
             gameState[1] = 1;
             space1.setImageResource(R.drawable.lemon);
-            space1.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space1.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 2 && gameIsActive) {
 
@@ -314,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
             space2.setTranslationY(-1000f);
             gameState[2] = 1;
             space2.setImageResource(R.drawable.lemon);
-            space2.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space2.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 3 && gameIsActive) {
 
@@ -322,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
             space3.setTranslationY(-1000f);
             gameState[3] = 1;
             space3.setImageResource(R.drawable.lemon);
-            space3.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space3.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 4 && gameIsActive) {
 
@@ -330,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
             space4.setTranslationY(-1000f);
             gameState[4] = 1;
             space4.setImageResource(R.drawable.lemon);
-            space4.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space4.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 5 && gameIsActive) {
 
@@ -338,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
             space5.setTranslationY(-1000f);
             gameState[5] = 1;
             space5.setImageResource(R.drawable.lemon);
-            space5.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space5.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 6 && gameIsActive) {
 
@@ -346,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             space6.setTranslationY(-1000f);
             gameState[6] = 1;
             space6.setImageResource(R.drawable.lemon);
-            space6.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space6.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 7 && gameIsActive) {
 
@@ -354,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
             space7.setTranslationY(-1000f);
             gameState[7] = 1;
             space7.setImageResource(R.drawable.lemon);
-            space7.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space7.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         } else if (spaceToTake == 8 && gameIsActive) {
 
@@ -362,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
             space8.setTranslationY(-1000f);
             gameState[8] = 1;
             space8.setImageResource(R.drawable.lemon);
-            space8.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            space8.animate().translationYBy(1000f).rotation(360).setDuration(DROP_DOWN_TIME);
 
         }
         playerCanGo = true;
