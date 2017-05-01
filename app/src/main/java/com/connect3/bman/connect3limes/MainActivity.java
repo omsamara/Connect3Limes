@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private int numLimeWins;
     private int numLemonWins;
     private int numDraws;
-    boolean gameIsActive;
+    private boolean gameIsActive;
+    private boolean playerCanGo;
 
     /**
      * Method that runs when the app is launched.
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         numLimeWins = 0;
         numDraws = 0;
         gameIsActive = true;
-
+        playerCanGo = true;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         numLemonWins = preferences.getInt("lemonWins", 0);
         numLimeWins = preferences.getInt("limeWins", 0);
@@ -89,11 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView counter = (ImageView) view;
         int gridPos = Integer.parseInt((String)counter.getTag());
-        if (gameState[gridPos] == 2 && gameIsActive) {
+        if (gameState[gridPos] == 2 && gameIsActive && playerCanGo) {
             counter.setTranslationY(-1000f);
             gameState[gridPos] = 0;
             counter.setImageResource(R.drawable.lime);
             counter.animate().translationYBy(1000f).rotation(360).setDuration(350);
+            playerCanGo = false;
             if (winActions()) {
                 return;
             }
@@ -326,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
             space8.animate().translationYBy(1000f).rotation(360).setDuration(350);
 
         }
+        playerCanGo = true;
     }
 
     public boolean winActions() {
@@ -394,6 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void playAgain(View view) {
         gameIsActive = true;
+        playerCanGo = true; 
         LinearLayout layout = (LinearLayout) findViewById(R.id.playAgainLayout);
         layout.setVisibility(View.INVISIBLE);
 

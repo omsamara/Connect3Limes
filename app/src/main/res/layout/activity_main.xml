@@ -56,7 +56,7 @@
         android:onClick="resetWins"
         android:text="Reset Wins"
         android:textAllCaps="false"
-        android:textSize="10sp" />
+        android:textSize="15sp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
