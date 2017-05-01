@@ -121,10 +121,135 @@ public class MainActivity extends AppCompatActivity {
     public void takeCPUTurn() {
 
 
-        int spaceToTake = rng.nextInt(9);
-        while (gameState[spaceToTake] != 2) {
-            spaceToTake = rng.nextInt(9);
+        int spaceToTake = -1;
+
+        if(gameState[0]==2 &&
+                ((gameState[1]==1 && gameState[2]==1) ||
+                        (gameState[4]==1 && gameState[8]==1) ||
+                        (gameState[3]==1 && gameState[6]==1))) {
+
+            spaceToTake = 0;
+
+        } else if (gameState[1]==2 &&
+                ((gameState[4]==1 && gameState[7]==1) ||
+                        (gameState[0]==1 && gameState[2]==1))) {
+
+            spaceToTake = 1;
+
+        } else if(gameState[2]==2 &&
+                ((gameState[0]==1 && gameState[1]==1) ||
+                        (gameState[6]==1 && gameState[4]==1) ||
+                        (gameState[5]==1 && gameState[8]==1))) {
+
+            spaceToTake = 2;
+
+        } else if(gameState[3]==2 &&
+                ((gameState[4]==1 && gameState[5]==1) ||
+                        (gameState[0]==1 && gameState[6]==1))){
+
+            spaceToTake = 3;
+
+        } else if(gameState[4]==2 &&
+                ((gameState[0]==1 && gameState[8]==1) ||
+                        (gameState[1]==1 && gameState[7]==1) ||
+                        (gameState[6]==1 && gameState[2]==1) ||
+                        (gameState[3]==1 && gameState[5]==1))) {
+
+            spaceToTake = 4;
+
+        } else if(gameState[5]==2 &&
+                ((gameState[3]==1 && gameState[4]==1) ||
+                        (gameState[2]==1 && gameState[8]==1))) {
+
+            spaceToTake = 5;
+
+        } else if(gameState[6]==2 &&
+                ((gameState[0]==1 && gameState[3]==0) ||
+                        (gameState[7]==1 && gameState[8]==1) ||
+                        (gameState[4]==1 && gameState[2]==1))){
+
+            spaceToTake = 6;
+
+        } else if(gameState[7]==2 &&
+                ((gameState[1]==1 && gameState[4]==1) ||
+                        (gameState[6]==1 && gameState[8]==1))) {
+
+            spaceToTake = 7;
+
+        }else if( gameState[8]==2 &&
+                ((gameState[0]==1 && gameState[4]==1) ||
+                        (gameState[2]==1 && gameState[5]==1) ||
+                        (gameState[6]==1 && gameState[7]==1))) {
+
+            spaceToTake = 8;
+
         }
+        else if(gameState[0]==2 &&
+                ((gameState[1]==0 && gameState[2]==0) ||
+                        (gameState[4]==0 && gameState[8]==0) ||
+                        (gameState[3]==0 && gameState[6]==0))) {
+
+            spaceToTake = 0;
+
+        } else if (gameState[1]==2 &&
+                ((gameState[4]==0 && gameState[7]==0) ||
+                        (gameState[0]==0 && gameState[2]==0))) {
+
+            spaceToTake = 1;
+
+        } else if(gameState[2]==2 &&
+                ((gameState[0]==0 && gameState[1]==0) ||
+                        (gameState[6]==0 && gameState[4]==0) ||
+                        (gameState[5]==0 && gameState[8]==0))) {
+
+            spaceToTake = 2;
+
+        } else if(gameState[3]==2 &&
+                ((gameState[4]==0 && gameState[5]==0) ||
+                        (gameState[0]==0 && gameState[6]==0))){
+
+            spaceToTake = 3;
+
+        } else if(gameState[4]==2 &&
+                ((gameState[0]==0 && gameState[8]==0) ||
+                        (gameState[1]==0 && gameState[7]==0) ||
+                        (gameState[6]==0 && gameState[2]==0) ||
+                        (gameState[3]==0 && gameState[5]==0))) {
+
+            spaceToTake = 4;
+
+        } else if(gameState[5]==2 &&
+                ((gameState[3]==0 && gameState[4]==0) ||
+                        (gameState[2]==0 && gameState[8]==0))) {
+
+            spaceToTake = 5;
+
+        } else if(gameState[6]==2 &&
+                ((gameState[0]==0 && gameState[3]==0) ||
+                        (gameState[7]==0 && gameState[8]==0) ||
+                        (gameState[4]==0 && gameState[2]==0))){
+
+            spaceToTake = 6;
+
+        } else if(gameState[7]==2 &&
+                ((gameState[1]==0 && gameState[4]==0) ||
+                        (gameState[6]==0 && gameState[8]==0))) {
+
+            spaceToTake = 7;
+
+        }else if( gameState[8]==2 &&
+                ((gameState[0]==0 && gameState[4]==0) ||
+                        (gameState[2]==0 && gameState[5]==0) ||
+                        (gameState[6]==0 && gameState[7]==0))) {
+
+            spaceToTake = 8;
+
+        } else {
+            spaceToTake = rng.nextInt(9);
+            while (gameState[spaceToTake] != 2) {
+                spaceToTake = rng.nextInt(9);
+            }
+        }    
 
         //TODO Consider a more efficient method for placing CPU token
         
