@@ -12,26 +12,51 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Random;
 
-//import static com.connect3.bman.connect3limes.R.id.space0;
-
 public class MainActivity extends AppCompatActivity {
 
+
+    //<editor-fold desc="Class Variables">
     /** Array of ints representing the game's state. 2 means no player has picked this spot */
     private int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
+
+    /** Positions in the board that represent 3 connected tokens, meaning a win. */
     private int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+
+
+    /** Board position for the space in the top left of the board */
     private ImageView space0;
+
+    /** Board position for the space in the top middle of the board */
     private ImageView space1;
+
+    /** Board position for the space in the top right of the board */
     private ImageView space2;
+
+    /** Board position for the space in the middle left of the board */
     private ImageView space3;
+
+    /** Board position for the space in the middle middle of the board */
     private ImageView space4;
+
+    /** Board position for the space in the middle right of the board */
     private ImageView space5;
+
+    /** Board position for the space in the bottom left of the board */
     private ImageView space6;
+
+    /** Board position for the space in the bottom middle of the board */
     private ImageView space7;
+
+    /** Board position for the space in the bottom right of the board */
     private ImageView space8;
+
+    /** The TextView reading to the user the number of wins the limes have */
     private TextView limeWins;
     private TextView lemonWins;
     private TextView draws;
@@ -41,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
     private int numDraws;
     private boolean gameIsActive;
     private boolean playerCanGo;
+    //</editor-fold>
 
     /**
      * Method that runs when the app is launched.
-     * @param savedInstanceState unknown for now
+     * @param savedInstanceState saved information
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         numLimeWins = preferences.getInt("limeWins", 0);
         numDraws = preferences.getInt("draws", 0);
 
+        //integration of ads
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-1021575853470656~5158131926");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         space0 = (ImageView) findViewById(R.id.space0);
         space1 = (ImageView) findViewById(R.id.space1);
@@ -96,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             counter.setImageResource(R.drawable.lime);
             counter.animate().translationYBy(1000f).rotation(360).setDuration(350);
             playerCanGo = false;
-            if (winActions()) {
+            if (endGameActions()) {
                 return;
             }
             new CountDownTimer(500, 100) {
@@ -106,20 +137,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 public void onFinish() {
                     takeCPUTurn();
-                    winActions();
+                    endGameActions();
                 }
             }.start();
 
 
         }
-        else {
-          return;
-        }
-
 
 
     }
 
+    /**
+     * Places down the lime token for the CPU. The method first checks to see if there is an
+     * immediate path to victory, if not then it checks if the user has one. If none of these cases
+     * are met, the cpu chooses a random spot on the board to play.
+     */
     public void takeCPUTurn() {
 
 
@@ -166,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             spaceToTake = 5;
 
         } else if(gameState[6]==2 &&
-                ((gameState[0]==1 && gameState[3]==0) ||
+                ((gameState[0]==1 && gameState[3]==1) ||
                         (gameState[7]==1 && gameState[8]==1) ||
                         (gameState[4]==1 && gameState[2]==1))){
 
@@ -186,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
             spaceToTake = 8;
 
         }
+
+
+        //Now begin checking to block the player's path to victory
+
+
         else if(gameState[0]==2 &&
                 ((gameState[1]==0 && gameState[2]==0) ||
                         (gameState[4]==0 && gameState[8]==0) ||
@@ -331,7 +368,11 @@ public class MainActivity extends AppCompatActivity {
         playerCanGo = true;
     }
 
-    public boolean winActions() {
+    /**
+     * If the game is completed the method performs the end game actions and returns true
+     * @return true if the game has ended
+     */
+    public boolean endGameActions() {
         for (int[] winningPos: winningPositions) {
 
             if (gameState[winningPos[0]] == gameState[winningPos[1]] &&
@@ -395,9 +436,13 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Method for resetting the board for a new game when the play again button is clicked
+     * @param view the clicked button
+     */
     public void playAgain(View view) {
         gameIsActive = true;
-        playerCanGo = true; 
+        playerCanGo = true;
         LinearLayout layout = (LinearLayout) findViewById(R.id.playAgainLayout);
         layout.setVisibility(View.INVISIBLE);
 
@@ -412,6 +457,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Saves all variables regarding wins
+     */
     private void saveVariables() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -426,6 +474,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    /**
+     * Resets the information about wins back to 0
+     * @param view the button that was clicked
+     */
     public void resetWins(View view) {
         numLemonWins = 0;
         lemonWins.setText("Lemons wins: " + numLemonWins);

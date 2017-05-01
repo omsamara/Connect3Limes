@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "174480078363",
+    "firebase_url": "https://tic-tac-lime.firebaseio.com",
+    "project_id": "tic-tac-lime",
+    "storage_bucket": "tic-tac-lime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174480078363:android:9206d9d12127691f",
+        "android_client_info": {
+          "package_name": "com.connect3.bman.connect3limes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174480078363-40plr72a616a1p7f3qm5ahc7bij76gh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAonmKJCzJkoKWIQy3_1763jLDz02nNEOY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
