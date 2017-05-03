@@ -2,6 +2,7 @@ package com.connect3.bman.connect3limes;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private int numDraws;
     private boolean gameIsActive;
     private boolean playerCanGo;
+    private MediaPlayer mPlayer;
+    private boolean musicShouldResume;
     //</editor-fold>
 
     /**
@@ -79,7 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         rng = new Random();
+        mPlayer  = MediaPlayer.create(this, R.raw.music);
+        mPlayer.setLooping(true);
+        mPlayer.setVolume(0.9f, 0.9f);
+        mPlayer.start();
         numLemonWins = 0;
         numLimeWins = 0;
         numDraws = 0;
@@ -489,4 +497,41 @@ public class MainActivity extends AppCompatActivity {
         draws.setText("Draws: " + numDraws);
         saveVariables();
     }
+
+    /**
+     * Toggles music with a click
+     * @param view the button that was clicked
+     */
+    public void toggleMusic(View view) {
+        if(mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
+        else {
+            mPlayer.start();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        mPlayer.stop();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();
+            musicShouldResume = true;
+        }
+        super.onPause();
+    }
+
+    public void onResume() {
+        if (musicShouldResume) {
+            mPlayer.start();
+            mPlayer.setLooping(true);
+        }
+        super.onResume();
+    }
+
 }
